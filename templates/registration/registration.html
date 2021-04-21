@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}User Registration{% endblock %}
+
+{% block content %}
+<div style="text-align:center"><h2>User Registration</h2></div>
+<div style="text-align:center">
+  <form method="post" action="{% url 'registration' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table align="center" style="text-align: left;">
+    {{ form.as_table }}
+    </table>
+    <button type="submit">Register</button>
+  </form></div>
+{% endblock content %}

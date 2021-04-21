@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} Profile of {{ object.username }} {% endblock %}
+
+{% block content %}
+
+<div style="text-align:center"><h2>Profile of "{{ object.username }}"</h2></div>
+
+<div id="main_block">
+    <p><b>{{ object.username }}</b></p>
+    <p>Email adress: {{ object.email }}</p>
+    <p>First name: {{ object.first_name }}</p>
+    <p>Last name: {{ object.last_name }}</p>
+    <p>Date joined: {{ object.date_joined }}</p>
+    <p>Last login: {{ object.last_login }}</p>
+</div>
+
+<div style="text-align:center">
+    <a href="{% url 'password_change' %}">Change Password</a>
+    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+</div>
+
+{% endblock %}
