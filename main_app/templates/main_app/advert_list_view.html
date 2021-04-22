@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} List of Adverts {% endblock %}
+
+{% block content %}
+
+<div style="text-align:center"><h2>Adverts</h2></div>
+
+<table id="main_block">
+    {% for object in object_list %}
+    <tr>
+        <td id='table_main_column'>{{ object.title }}</td>
+        <td><i>{{ object.description }}</i></td>
+        <td>{{ object.city }}</td>
+        <td>{{ object.category }}</td>
+        <td>{{ object.views }}</td>
+        <td><a href="{% url 'main_app:advert_detail' pk=object.pk %}">Detail</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
