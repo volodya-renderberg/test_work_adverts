@@ -26,26 +26,14 @@ class homPageView(TemplateView):
     template_name="main_app/home.html"
 
 class advertListView(ListView):
-    template_name="main_app/advert_list_view.html"
-
     def get_queryset(self):
         return Advert.objects.all().prefetch_related('city', 'category')
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
-        context = self.get_context_data()
-        
-        #
-        jsn_object_list=serialize('json', context["object_list"], cls=DjangoJSONEncoder)
-
-        data=context.copy()
-        data["object_list"]=json.loads(jsn_object_list)
-        del data["advert_list"]
-        del data["view"]
-
+        data=serialize('json', self.object_list, cls=DjangoJSONEncoder)
         return JsonResponse({"data": data})
 
-        # return self.render_to_response(context)
 
 class advertDetailView(DetailView):
     template_name="main_app/advert_view.html"
