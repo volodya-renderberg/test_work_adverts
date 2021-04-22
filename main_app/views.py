@@ -34,12 +34,13 @@ class advertListView(ListView):
         data=serialize('json', object_list, cls=DjangoJSONEncoder)
         return JsonResponse({"data": json.loads(data)})
 
-
 class advertDetailView(DetailView):
     model=Advert
 
     def get(self, request, *args, **kwargs):
         object = self.get_object()
+        object.views+=1
+        object.save()
         data=serialize('json', (object,), cls=DjangoJSONEncoder)
         return JsonResponse({"data": json.loads(data)[0]})
 
