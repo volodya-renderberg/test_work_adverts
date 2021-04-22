@@ -38,10 +38,10 @@ class advertDetailView(DetailView):
     model=Advert
 
     def get(self, request, *args, **kwargs):
-        object = self.get_object()
-        object.views+=1
-        object.save()
-        data=serialize('json', (object,), cls=DjangoJSONEncoder)
+        ob = self.get_object()
+        ob.views+=1
+        ob.save()
+        data=serialize('json', (ob,), cls=DjangoJSONEncoder)
         return JsonResponse({"data": json.loads(data)[0]})
 
 class ProfileView(LoginRequiredMixin, DetailView):
