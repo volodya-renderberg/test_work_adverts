@@ -30,14 +30,18 @@ class advertListView(ListView):
         return Advert.objects.all().prefetch_related('city', 'category')
 
     def get(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
-        data=serialize('json', self.object_list, cls=DjangoJSONEncoder)
-        return JsonResponse({"data": data})
+        object_list = self.get_queryset()
+        data=serialize('json', object_list, cls=DjangoJSONEncoder)
+        return JsonResponse({"data": json.loads(data)})
 
 
 class advertDetailView(DetailView):
-    template_name="main_app/advert_view.html"
     model=Advert
+
+    def get(self, request, *args, **kwargs):
+        object = self.get_object()
+        data=serialize('json', (object,), cls=DjangoJSONEncoder)
+        return JsonResponse({"data": json.loads(data)[0]})
 
 class ProfileView(LoginRequiredMixin, DetailView):
     template_name="main_app/profile_view.html"
