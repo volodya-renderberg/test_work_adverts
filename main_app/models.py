@@ -19,8 +19,8 @@ class City(models.Model):
 class Advert(models.Model):
     title=models.CharField(max_length=50)
     description=models.TextField(blank=True)
-    city=models.ManyToManyField(City, blank=True)
-    category=models.ManyToManyField(Category, blank=True)
+    city=models.ManyToManyField(City, blank=True, related_name='adverts')
+    category=models.ManyToManyField(Category, blank=True, related_name='adverts')
     views=models.IntegerField(default=0)
 
     def __str__(self):

@@ -14,10 +14,22 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.core import signing
 
+from rest_framework import viewsets
+from rest_framework import permissions
+from .serializers import CategorySerializer, CitySerializer, AdvertSerializer
+
 from .forms import UserRegistrationForm
 from .models import Advert, City
 
 # Create your views here.
+
+class AdvertViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Advert.objects.all()
+    serializer_class = AdvertSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 def accountsRedirect(request):
     return HttpResponseRedirect(reverse("main_app:home"))
