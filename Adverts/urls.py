@@ -22,8 +22,18 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from main_app.views import accountsRedirect, ProfileView, UserRegistrationView, UserProfileUpdateView
 
+from main_app import views as main_views
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register(r'adverts', main_views.AdvertViewSet)
+router.register(r'categories', main_views.CategoryViewSet)
+router.register(r'cities', main_views.CityViewSet)
+
 urlpatterns = [
     path('', include('main_app.urls')),
+    path('api/', include(router.urls)),
+    path('api/advert-list/', main_views.advertListView.as_view(), name='advert_list'),
+    path('api/advert/<int:pk>/', main_views.advertDetailView.as_view(), name='advert_detail'),
     path('admin/', admin.site.urls),
     path('accounts/', accountsRedirect, name='accounts'),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
