@@ -19,7 +19,7 @@ from rest_framework import permissions
 from .serializers import CategorySerializer, CitySerializer, AdvertSerializer
 
 from .forms import UserRegistrationForm
-from .models import Advert, City
+from .models import Advert, City, Category
 
 # Create your views here.
 
@@ -29,7 +29,23 @@ class AdvertViewSet(viewsets.ModelViewSet):
     """
     queryset = Advert.objects.all()
     serializer_class = AdvertSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [permissions.IsAdminUser]
+
+class CityViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+    permission_classes = [permissions.IsAdminUser]
 
 def accountsRedirect(request):
     return HttpResponseRedirect(reverse("main_app:home"))

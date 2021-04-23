@@ -14,5 +14,4 @@ class CitySerializer(serializers.HyperlinkedModelSerializer):
 class AdvertSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Advert
-        # fields = ['title', 'description', 'city', 'category', 'views']
-        fields = ['title', 'description', 'views']
+        fields = ['title', 'description', 'city', 'category']
