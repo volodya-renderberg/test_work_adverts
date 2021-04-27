@@ -52,6 +52,7 @@ def accountsRedirect(request):
 class homPageView(TemplateView):
     template_name="main_app/home.html"
 
+
 class AdvertListView(ListView):
     def get_queryset(self):
         return Advert.objects.all().prefetch_related('city', 'category')
@@ -60,6 +61,7 @@ class AdvertListView(ListView):
         object_list = self.get_queryset()
         data=serialize('json', object_list, cls=DjangoJSONEncoder)
         return JsonResponse({"data": json.loads(data)})
+
 
 class AdvertDetailView(DetailView):
     model=Advert
@@ -70,11 +72,13 @@ class AdvertDetailView(DetailView):
         data=serialize('json', (instance,), cls=DjangoJSONEncoder)
         return JsonResponse({"data": json.loads(data)[0]})
 
+
 class ProfileView(LoginRequiredMixin, DetailView):
     template_name="main_app/profile_view.html"
     
     def get_object(self):
         return self.request.user
+
 
 class UserRegistrationView(CreateView):
     template_name="registration/registration.html"
@@ -91,6 +95,7 @@ class UserRegistrationView(CreateView):
         user=User.objects.create_user(**instance.__dict__)
         login(self.request, user)
         return redirect(self.success_url)
+        
 
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     template_name="registration/edit_profile.html"

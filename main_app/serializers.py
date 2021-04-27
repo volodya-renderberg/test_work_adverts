@@ -6,10 +6,12 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
         model = Category
         fields = ['name']
 
+
 class CitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = City
         fields = ['name']
+        
 
 class AdvertSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
