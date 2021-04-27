@@ -2,17 +2,16 @@
 
 import json
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import redirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.serializers import serialize
 from django.urls import reverse_lazy, reverse
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DetailView
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from django.core import signing
+from django.db.models import F
 
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -53,7 +52,7 @@ def accountsRedirect(request):
 class homPageView(TemplateView):
     template_name="main_app/home.html"
 
-class advertListView(ListView):
+class AdvertListView(ListView):
     def get_queryset(self):
         return Advert.objects.all().prefetch_related('city', 'category')
 
@@ -62,14 +61,13 @@ class advertListView(ListView):
         data=serialize('json', object_list, cls=DjangoJSONEncoder)
         return JsonResponse({"data": json.loads(data)})
 
-class advertDetailView(DetailView):
+class AdvertDetailView(DetailView):
     model=Advert
 
     def get(self, request, *args, **kwargs):
-        ob = self.get_object()
-        ob.views+=1
-        ob.save()
-        data=serialize('json', (ob,), cls=DjangoJSONEncoder)
+        instance = self.get_object()
+        Advert.objects.filter(pk=instance.pk).update(views=F("views")+1)
+        data=serialize('json', (instance,), cls=DjangoJSONEncoder)
         return JsonResponse({"data": json.loads(data)[0]})
 
 class ProfileView(LoginRequiredMixin, DetailView):

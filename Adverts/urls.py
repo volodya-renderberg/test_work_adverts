@@ -16,9 +16,7 @@ Including another URLconf
 from django.contrib import admin
 # from django.contrib.staticfiles import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import path, include, re_path
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from main_app.views import accountsRedirect, ProfileView, UserRegistrationView, UserProfileUpdateView
 
@@ -32,8 +30,8 @@ router.register(r'cities', main_views.CityViewSet)
 urlpatterns = [
     path('', include('main_app.urls')),
     path('api/', include(router.urls)),
-    path('api/advert-list/', main_views.advertListView.as_view(), name='advert_list'),
-    path('api/advert/<int:pk>/', main_views.advertDetailView.as_view(), name='advert_detail'),
+    path('api/advert-list/', main_views.AdvertListView.as_view(), name='advert_list'),
+    path('api/advert/<int:pk>/', main_views.AdvertDetailView.as_view(), name='advert_detail'),
     path('admin/', admin.site.urls),
     path('accounts/', accountsRedirect, name='accounts'),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
