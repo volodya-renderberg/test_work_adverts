@@ -1,9 +1,7 @@
 # test_work_adverts
 
-localhost:8000/advert-list/ - json список словарей всех объектов
+localhost:8000/api/ - добавление объектов
 
-localhost:8000/advert/pk/ - json словарь оъекта
+localhost:8000/api/advert-list/ - json список словарей всех объектов
 
-добавление объектов через классический /admin/
-
-суперюзер vofka пароль 1024#
+localhost:8000/api/advert/pk/ - json словарь оъекта
