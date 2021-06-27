@@ -2,7 +2,7 @@
 
 import json
 
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.serializers import serialize
@@ -67,8 +67,10 @@ class AdvertDetailView(DetailView):
     model=Advert
 
     def get(self, request, *args, **kwargs):
+        Advert.objects.filter(pk=kwargs["pk"]).update(views=F("views")+1)
+
         instance = self.get_object()
-        Advert.objects.filter(pk=instance.pk).update(views=F("views")+1)
+
         data=serialize('json', (instance,), cls=DjangoJSONEncoder)
         return JsonResponse({"data": json.loads(data)[0]})
 
